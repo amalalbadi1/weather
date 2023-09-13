@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather in Oman</title>
+</head>
+<body>
+<h1>Weather in Oman</h1>
+<div id="weather-container">
+    <p>Loading...</p>
+</div>
+
+<script>
+    // Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
+    const apiKey = 'YOUR_API_KEY';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Oman&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const weatherContainer = document.getElementById('weather-container');
+            weatherContainer.innerHTML = `
+                <h2>Weather in Oman</h2>
+                <p>Temperature: ${data.main.temp}°C</p>
+                <p>Humidity: ${data.main.humidity}%</p>
+                <p>Weather: ${data.weather[0].description}</p>
+                <p>Wind Speed: ${data.wind.speed} m/s</p>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+            const weatherContainer = document.getElementById('weather-container');
+            weatherContainer.innerHTML = '<p>Unable to fetch weather data</p>';
+        });
+</script>
+</body>
+</html>
